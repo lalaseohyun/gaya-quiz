@@ -1,0 +1,628 @@
+/* 진행자 화면 — 빔프로젝터 투사용 다크 무대 */
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.host {
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.stage {
+  flex: 1;
+  min-height: 0;
+  padding: clamp(20px, 3vh, 44px) clamp(24px, 3vw, 56px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= 대기화면 ================= */
+
+.lobby {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(260px, 34%) 1fr;
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
+}
+
+.lobby-qr {
+  background: #fff;
+  border-radius: 20px;
+  padding: clamp(14px, 1.6vw, 24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lobby-qr img,
+.lobby-qr svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.lobby-side {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2.4vh, 28px);
+  min-width: 0;
+}
+
+.lobby-kicker {
+  color: var(--yellow);
+  font-size: clamp(15px, 1.3vw, 22px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.lobby-title {
+  font-size: clamp(30px, 3.6vw, 62px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.lobby-howto {
+  font-size: clamp(15px, 1.2vw, 22px);
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.lobby-howto b {
+  color: var(--cream);
+}
+
+/* ================= 팀 칩 ================= */
+
+.team-strip {
+  display: grid;
+  gap: clamp(8px, 0.9vw, 16px);
+  grid-template-columns: repeat(var(--chip-cols, 5), 1fr);
+}
+
+.chip {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: var(--panel);
+  border: 3px solid var(--line);
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-weight: 800;
+  font-size: clamp(15px, 1.5vw, 30px);
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+  max-width: 132px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.chip.joined {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: var(--ink);
+}
+
+.chip-mark {
+  font-size: 0.62em;
+  line-height: 1;
+  height: 0.7em;
+}
+
+.chip.answered .chip-mark::after {
+  content: "✓";
+}
+
+.chip.ox-o {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: var(--ink);
+}
+
+.chip.ox-x {
+  background: var(--panel);
+  border-color: var(--line);
+  color: var(--muted);
+}
+
+/* ================= 문항 화면 ================= */
+
+.quiz {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2.4vh, 34px);
+}
+
+.qhead {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.qbadge {
+  background: var(--cream);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: clamp(14px, 1.1vw, 20px);
+  padding: 6px 18px;
+  border-radius: 999px;
+}
+
+.qtext {
+  text-align: center;
+  font-size: clamp(28px, 3.5vw, 68px);
+  font-weight: 800;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+  flex: 0 0 auto;
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(12px, 1.4vw, 26px);
+  flex: 1;
+  min-height: 0;
+}
+
+.choice {
+  background: var(--panel);
+  border-radius: 20px;
+  padding: clamp(14px, 1.6vw, 28px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 0.8vh, 14px);
+  text-align: center;
+  min-height: 0;
+}
+
+.choice-mark {
+  color: var(--yellow);
+  font-size: clamp(20px, 1.9vw, 38px);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.choice-text {
+  font-size: clamp(19px, 2vw, 42px);
+  font-weight: 700;
+  line-height: 1.3;
+  overflow: hidden;
+}
+
+.submit-line {
+  text-align: center;
+  color: var(--muted);
+  font-size: clamp(14px, 1.1vw, 20px);
+  font-weight: 700;
+}
+
+.submit-line b {
+  color: var(--cream);
+}
+
+/* ================= 정답 공개 ================= */
+
+.reveal {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 2vw, 34px);
+}
+
+.reveal-left,
+.reveal-right {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.4vh, 20px);
+  min-height: 0;
+}
+
+.rchoice {
+  background: var(--panel);
+  border-radius: 14px;
+  padding: clamp(10px, 1.2vh, 18px) clamp(14px, 1.4vw, 22px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: clamp(15px, 1.3vw, 26px);
+  font-weight: 700;
+  min-height: 0;
+}
+
+.rchoice.is-answer {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.rchoice-mark {
+  font-weight: 800;
+  opacity: 0.75;
+  flex: 0 0 auto;
+}
+
+.rchoice-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rchoice-count {
+  flex: 0 0 auto;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.reveal-teams {
+  margin-top: auto;
+}
+
+.answer-card {
+  background: var(--yellow);
+  color: var(--ink);
+  border-radius: 22px;
+  padding: clamp(16px, 2.2vh, 34px) clamp(18px, 1.8vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.answer-kicker {
+  font-size: clamp(13px, 1vw, 19px);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  opacity: 0.72;
+}
+
+.answer-text {
+  font-size: clamp(24px, 2.7vw, 54px);
+  font-weight: 800;
+  line-height: 1.24;
+  letter-spacing: -0.02em;
+}
+
+.note-card {
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 22px;
+  padding: clamp(16px, 2vh, 30px) clamp(18px, 1.8vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.2vh, 16px);
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.note-highlight {
+  font-size: clamp(20px, 2.1vw, 42px);
+  font-weight: 800;
+  line-height: 1.25;
+  flex: 0 0 auto;
+}
+
+.note-body {
+  font-size: 22px;
+  line-height: 1.5;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+}
+
+.note-body p {
+  margin: 0;
+}
+
+/* ================= 최종 순위 ================= */
+
+.final {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2vh, 26px);
+}
+
+.final-title {
+  text-align: center;
+  font-size: clamp(24px, 2.6vw, 50px);
+  font-weight: 800;
+  margin: 0;
+}
+
+.rank-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px, 1.4vw, 22px);
+  align-content: stretch;
+}
+
+.rank-card {
+  background: var(--panel);
+  border-radius: 20px;
+  padding: clamp(12px, 1.6vh, 26px) clamp(16px, 1.8vw, 30px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 0;
+}
+
+.rank-card.top {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.rank-id {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+}
+
+.rank-no {
+  font-size: clamp(15px, 1.2vw, 24px);
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.rank-card.top .rank-no {
+  color: var(--ink);
+  opacity: 0.6;
+}
+
+.rank-team {
+  font-size: clamp(18px, 1.6vw, 32px);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.rank-score {
+  font-size: clamp(34px, 4.4vw, 88px);
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.rank-score small {
+  font-size: 0.34em;
+  font-weight: 800;
+  margin-left: 0.15em;
+}
+
+.final-empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: clamp(18px, 1.6vw, 28px);
+  font-weight: 700;
+}
+
+/* ================= 마무리 ================= */
+
+.outro {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 3vh, 42px);
+  text-align: center;
+}
+
+.outro-title {
+  font-size: clamp(30px, 3.6vw, 68px);
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.outro-lines {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.6vh, 22px);
+  max-width: 30em;
+}
+
+.outro-line {
+  font-size: clamp(18px, 1.8vw, 34px);
+  line-height: 1.5;
+  color: var(--cream);
+}
+
+/* ================= 조작 바 ================= */
+
+.controlbar {
+  flex: 0 0 auto;
+  background: var(--panel);
+  border-top: 1px solid var(--line);
+  padding: 12px clamp(16px, 2vw, 28px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.badges {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.badge {
+  background: var(--panel-2);
+  color: var(--cream);
+  font-size: 14px;
+  font-weight: 800;
+  padding: 7px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.badge.live {
+  color: var(--ink);
+  background: var(--yellow);
+}
+
+.badge.down {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.qselect {
+  background: var(--panel-2);
+  color: var(--on-stage);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  max-width: 230px;
+}
+
+.btn {
+  background: var(--panel-2);
+  color: var(--on-stage);
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background: var(--line);
+}
+
+.btn-go {
+  background: var(--yellow);
+  color: var(--ink);
+  font-size: clamp(16px, 1.3vw, 22px);
+  padding: 14px 34px;
+  border-radius: 14px;
+}
+
+.btn-go.ready {
+  animation: pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(253, 206, 15, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 14px rgba(253, 206, 15, 0);
+  }
+}
+
+.more-wrap {
+  position: relative;
+}
+
+.more-menu {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: 0;
+  background: var(--panel-2);
+  border-radius: 14px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 190px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  z-index: 40;
+}
+
+.more-menu button {
+  text-align: left;
+  padding: 11px 14px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-stage);
+}
+
+.more-menu button:hover {
+  background: var(--line);
+}
+
+/* 무대 모드 — 브라우저가 전체화면을 거부해도 부수 UI는 확실히 숨김 */
+.stage-mode .qselect,
+.stage-mode .btn-fs,
+.stage-mode .more-wrap,
+.stage-mode .badge-progress {
+  display: none;
+}
+
+.stage-mode .controlbar {
+  background: transparent;
+  border-top: none;
+  padding: 8px 20px;
+}
+
+.stage-mode .btn-go {
+  opacity: 0.28;
+  transition: opacity 0.2s;
+}
+
+.stage-mode .controlbar:hover .btn-go {
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
+  .lobby {
+    grid-template-columns: 1fr;
+  }
+  .reveal {
+    grid-template-columns: 1fr;
+  }
+  .choices {
+    grid-template-columns: 1fr;
+  }
+  .rank-grid {
+    grid-template-columns: 1fr;
+  }
+  .controlbar {
+    flex-wrap: wrap;
+  }
+}
