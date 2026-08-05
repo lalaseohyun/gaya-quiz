@@ -199,9 +199,11 @@
       opts +
       "</div>" +
       '<div class="pstat">' +
-      '<div class="pstat-box"><div class="pstat-k">누적 점수</div><div class="pstat-v">' +
-      (me ? me.score : 0) +
-      '</div></div>' +
+      '<div class="pstat-box"><div class="pstat-k">맞힌 개수</div><div class="pstat-v">' +
+      (me ? me.correctCount : 0) +
+      " / " +
+      C.scoredCount(quiz) +
+      "</div></div>" +
       '<div class="pstat-box"><div class="pstat-k">현재 순위</div><div class="pstat-v">' +
       (me ? me.rank + "위" : "-") +
       "</div></div>" +
@@ -226,7 +228,9 @@
       (me ? me.rank + "위" : "-") +
       "</div>" +
       '<h2 class="pcenter-title">' +
-      (me ? me.score + "점" : "참여 기록이 없습니다") +
+      (me
+        ? C.scoredCount(quiz) + "문항 중 " + me.correctCount + "개"
+        : "참여 기록이 없습니다") +
       "</h2>" +
       '<p class="pcenter-sub">' +
       (me ? "전체 " + standings.length + "팀 가운데" : "") +

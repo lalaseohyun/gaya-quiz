@@ -314,6 +314,7 @@
         '<div class="final"><h1 class="final-title">최종 순위</h1><div class="final-empty">참여한 팀이 없습니다</div></div>';
       return;
     }
+    var total = C.scoredCount(quiz);
     var cards = rows
       .map(function (r) {
         return (
@@ -323,9 +324,11 @@
           r.rank +
           '위</span><span class="rank-team">' +
           C.escapeHtml(r.label) +
-          '</span></div><div class="rank-score">' +
-          r.score +
-          "<small>점</small></div></div>"
+          '</span></div><div class="rank-result"><span class="rank-of">' +
+          total +
+          '문항 중</span><span class="rank-score">' +
+          r.correctCount +
+          "<small>개</small></span></div></div>"
         );
       })
       .join("");

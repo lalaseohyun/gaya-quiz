@@ -32,8 +32,10 @@
                 "위</span>" +
                 C.escapeHtml(r.label) +
                 "</span><span>" +
-                r.score +
-                "점</span></div>"
+                r.correctCount +
+                " / " +
+                C.scoredCount(quiz) +
+                "개</span></div>"
               );
             })
             .join("") +

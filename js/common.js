@@ -70,6 +70,13 @@
     return { state: emptyState(), answers: {}, joined: {}, asked: {} };
   }
 
+  // 점수에 반영되는 문항 수 (연습문제 제외)
+  function scoredCount(quiz) {
+    return quiz.questions.filter(function (q) {
+      return q.scored !== false;
+    }).length;
+  }
+
   function teamLabel(quiz, no) {
     var t = quiz.teams.filter(function (x) {
       return x.no === Number(no);
@@ -175,6 +182,7 @@
     checkAccessKey: checkAccessKey,
     loadQuizData: loadQuizData,
     buildRunList: buildRunList,
+    scoredCount: scoredCount,
     initFirebase: initFirebase,
     now: now,
     roomRef: roomRef,
