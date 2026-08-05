@@ -28,7 +28,10 @@
   }
 
   function loadQuizData() {
-    return fetch(DATA_PATH).then(function (res) {
+    // GitHub Pages가 max-age=600을 붙이기 때문에 그냥 두면 문항을 고친 뒤 최대 10분간
+    // 옛 데이터가 뜰 수 있습니다. 진행자와 팀이 서로 다른 문항을 보는 사고를 막기 위해
+    // 항상 서버에 재검증합니다 (내용이 그대로면 304라 비용은 거의 없습니다).
+    return fetch(DATA_PATH, { cache: "no-cache" }).then(function (res) {
       if (!res.ok) throw new Error("퀴즈 데이터를 불러오지 못했습니다 (" + res.status + ")");
       return res.json();
     });
