@@ -4,7 +4,7 @@
 
   var ROOM_ID = "gaya2026";
   var ACCESS_KEY = "gaya2026";
-  var ADMIN_PASSWORD = "gaya2026admin";
+  var ADMIN_PASSWORD = "2026";
   var DATA_PATH = "../data/gaya-quiz-2026.json";
 
   function getQueryParam(name) {
