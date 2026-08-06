@@ -243,6 +243,7 @@
       '<div class="choices">' +
       choicesHtml +
       "</div>" +
+      '<div class="quiz-slack"></div>' +
       '<div class="submit-line">제출 <b>' +
       ans.length +
       "</b> / " +
