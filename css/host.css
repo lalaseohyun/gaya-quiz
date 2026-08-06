@@ -355,6 +355,13 @@ body {
   gap: clamp(12px, 2vh, 26px);
 }
 
+.final-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
 .final-title {
   text-align: center;
   font-size: clamp(24px, 2.6vw, 50px);
@@ -362,13 +369,25 @@ body {
   margin: 0;
 }
 
+.final-sub {
+  color: var(--muted);
+  font-size: clamp(13px, 1.1vw, 20px);
+  font-weight: 700;
+}
+
+/* 카드 수가 적어도 늘어나지 않고 화면 가운데에 모입니다 */
 .rank-grid {
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(var(--rank-cols, 2), minmax(0, 1fr));
   gap: clamp(10px, 1.4vw, 22px);
-  align-content: stretch;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+  max-width: clamp(520px, 62vw, 1180px);
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .rank-card {
@@ -379,7 +398,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  min-height: 0;
+  min-height: clamp(84px, 13vh, 150px);
 }
 
 .rank-card.top {

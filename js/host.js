@@ -332,8 +332,21 @@
         );
       })
       .join("");
+    // 팀이 적으면 한 줄로 세워야 화면이 비어 보이지 않습니다.
+    var cols = rows.length <= 2 ? 1 : 2;
+    var missing = quiz.meta.teamCount - rows.length;
+
     stage.innerHTML =
-      '<div class="final"><h1 class="final-title">최종 순위</h1><div class="rank-grid">' +
+      '<div class="final">' +
+      '<div class="final-head"><h1 class="final-title">최종 순위</h1>' +
+      '<div class="final-sub">참여 ' +
+      rows.length +
+      "팀" +
+      (missing > 0 ? " · 미접속 " + missing + "팀은 집계에서 빠졌습니다" : "") +
+      "</div></div>" +
+      '<div class="rank-grid" style="--rank-cols:' +
+      cols +
+      '">' +
       cards +
       "</div></div>";
   }
