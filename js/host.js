@@ -95,13 +95,17 @@
   }
 
   function resetAll() {
-    var pw = window.prompt("관리자 비밀번호를 입력하세요");
-    if (pw === null) return;
-    if (pw !== C.ADMIN_PASSWORD) {
-      window.alert("비밀번호가 올바르지 않습니다.");
-      return;
-    }
-    if (!window.confirm("전체 초기화합니다.\n답변·점수·접속한 팀 목록이 모두 지워집니다.")) return;
+    // 비밀번호는 두지 않습니다. 진행자 화면에 닿은 사람은 어차피 문항을 넘길 수 있어
+    // 초기화에만 비번을 걸어봐야 실질적인 보호가 안 되고, 무대 위에서는 부담만 됩니다.
+    // 실수 클릭은 "더보기"에 접어둔 것과 아래 확인 창으로 막습니다.
+    var n = joinedList().length;
+    var msg =
+      "전체 초기화합니다.\n\n" +
+      "· 모든 팀의 답변과 점수\n" +
+      "· 접속한 팀 목록" +
+      (n > 0 ? " (지금 " + n + "팀)" : "") +
+      "\n\n이 전부 지워지고 대기화면으로 돌아갑니다.\n되돌릴 수 없습니다.";
+    if (!window.confirm(msg)) return;
     C.roomRef(db).set(C.initialRoomData());
   }
 

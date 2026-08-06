@@ -14,7 +14,6 @@
 
   var ROOM_ID = "gaya2026";
   var ACCESS_KEY = "gaya2026";
-  var ADMIN_PASSWORD = "2026";
   var DATA_PATH = "../data/gaya-quiz-2026.json";
 
   var serverOffset = 0; // 서버 시각 - 기기 시각 (기기 시계가 틀려도 ms 집계가 흔들리지 않게)
@@ -180,7 +179,6 @@
   global.QuizCommon = {
     ROOM_ID: ROOM_ID,
     ACCESS_KEY: ACCESS_KEY,
-    ADMIN_PASSWORD: ADMIN_PASSWORD,
     getQueryParam: getQueryParam,
     checkAccessKey: checkAccessKey,
     loadQuizData: loadQuizData,
