@@ -109,9 +109,9 @@
     C.roomRef(db).set(C.initialRoomData());
   }
 
-  function toggleFullscreen() {
+  function setStageMode(on) {
     // 브라우저가 전체화면을 거부해도 무대 모드 클래스로 부수 UI는 확실히 숨깁니다.
-    stageMode = !stageMode;
+    stageMode = on;
     document.body.classList.toggle("stage-mode", stageMode);
     try {
       if (stageMode && !document.fullscreenElement) {
@@ -125,6 +125,10 @@
       /* 무대 모드만으로도 동작합니다 */
     }
     render();
+  }
+
+  function toggleFullscreen() {
+    setStageMode(!stageMode);
   }
 
   // ---------- 렌더 ----------
@@ -308,7 +312,8 @@
 
     // 카드 안에 안 들어가면 글자 크기를 줄여서라도 잘리지 않게 합니다.
     requestAnimationFrame(function () {
-      C.fitToBox(document.getElementById("note-body"), 26, 12);
+      // 상한은 CSS의 --ui 배율에 맞춰 따라갑니다 (기본 22px × 1.5 ≈ 33px, 여유 두고 40px)
+      C.fitToBox(document.getElementById("note-body"), 40, 16);
     });
   }
 
@@ -402,6 +407,7 @@
       })
       .join("");
 
+    controlbar.classList.toggle("menu-open", menuOpen);
     controlbar.innerHTML =
       '<div class="badges">' +
       '<span class="badge badge-progress">' +
@@ -514,11 +520,31 @@
         });
 
         document.addEventListener("keydown", function (e) {
-          if (e.code !== "Space") return;
           var tag = (e.target.tagName || "").toLowerCase();
           if (tag === "select" || tag === "input" || tag === "textarea") return;
+          if (e.code === "Escape") {
+            // 무대 모드에서 빠져나오는 확실한 탈출구
+            if (menuOpen) {
+              menuOpen = false;
+              render();
+            } else if (stageMode) {
+              setStageMode(false);
+            }
+            return;
+          }
+          if (e.code !== "Space") return;
           e.preventDefault();
           advance();
+        });
+
+        // 브라우저가 자체적으로 전체화면을 빠져나가면(Esc 등) 무대 모드도 함께 풉니다.
+        // 그러지 않으면 조작 UI가 숨겨진 채로 남습니다.
+        document.addEventListener("fullscreenchange", function () {
+          if (!document.fullscreenElement && stageMode) {
+            stageMode = false;
+            document.body.classList.remove("stage-mode");
+            render();
+          }
         });
 
         document.addEventListener("click", function () {
