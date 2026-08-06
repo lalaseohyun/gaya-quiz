@@ -282,7 +282,7 @@
 
     var sentences = C.splitSentences(q.explanation)
       .map(function (s) {
-        return "<p>" + C.escapeHtml(s) + "</p>";
+        return "<p>" + C.inlineBold(s) + "</p>";
       })
       .join("");
 
@@ -294,10 +294,8 @@
       teamStripHtml("ox") +
       "</div>" +
       "</div>" +
+      // 정답은 왼쪽 보기 카드에 노란색으로 이미 표시됩니다. 오른쪽은 해설만.
       '<div class="reveal-right">' +
-      '<div class="answer-card"><div class="answer-kicker">정답</div><div class="answer-text">' +
-      C.escapeHtml(q.answerLabel || q.choices[q.answerIndex]) +
-      "</div></div>" +
       '<div class="note-card"><div class="note-highlight">' +
       C.escapeHtml(q.highlight) +
       '</div><div class="note-body" id="note-body">' +

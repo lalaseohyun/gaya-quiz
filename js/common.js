@@ -152,6 +152,12 @@
     });
   }
 
+  // 해설 안의 **강조**를 굵게. HTML을 먼저 이스케이프하므로 태그 주입은 되지 않습니다.
+  // 마침표는 ** 밖에 두세요 ("…아닙니다**." ○ / "…아닙니다.**" ✗) — 문장 분리가 어긋납니다.
+  function inlineBold(text) {
+    return escapeHtml(text).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  }
+
   // 해설을 문장 단위로 끊습니다. 카드 안에서 한 줄씩 읽히도록.
   function splitSentences(text) {
     if (!text) return [];
@@ -195,6 +201,7 @@
     rankOf: rankOf,
     showFatalError: showFatalError,
     escapeHtml: escapeHtml,
+    inlineBold: inlineBold,
     splitSentences: splitSentences,
     fitToBox: fitToBox
   };

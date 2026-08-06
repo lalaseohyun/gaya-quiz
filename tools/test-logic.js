@@ -153,6 +153,25 @@ group("해설 표시");
   check("합치면 원문 보존", s.join(" ").replace(/\s+/g, "") === Q[1].explanation.replace(/\s+/g, ""));
 }
 
+// --- 강조(**) 처리 ---------------------------------------------------------
+group("해설 강조");
+{
+  check("모든 문항에 강조가 하나 이상", Q.every((q) => /\*\*(.+?)\*\*/.test(q.explanation)),
+    Q.filter((q) => !/\*\*/.test(q.explanation)).map((q) => q.id));
+  check("** 짝이 맞음", Q.every((q) => (q.explanation.match(/\*\*/g) || []).length % 2 === 0));
+  // 마침표를 ** 안에 넣으면 문장 분리가 어긋납니다.
+  check("마침표가 ** 안에 들어가지 않음", Q.every((q) => !/[.!?]\*\*/.test(q.explanation)),
+    Q.filter((q) => /[.!?]\*\*/.test(q.explanation)).map((q) => q.id));
+  check("강조가 문장 경계를 넘지 않음",
+    Q.every((q) => C.splitSentences(q.explanation).every(
+      (s) => (s.match(/\*\*/g) || []).length % 2 === 0)));
+  check("**가 <strong>으로 바뀜", C.inlineBold("앞 **가운데** 뒤") === "앞 <strong>가운데</strong> 뒤",
+    C.inlineBold("앞 **가운데** 뒤"));
+  check("HTML은 이스케이프됨", C.inlineBold("<script>x</script>").indexOf("<script") === -1,
+    C.inlineBold("<script>x</script>"));
+  check("강조 없는 문장은 그대로", C.inlineBold("그냥 문장") === "그냥 문장");
+}
+
 // --- 초기 상태 -------------------------------------------------------------
 group("초기화");
 {
