@@ -12,6 +12,9 @@
   --on-stage: #f3f2ee; /* 어두운 면 위 글씨 */
   --muted: #9b9994; /* 보조 텍스트 */
   --line: #4e4e4a;
+  /* 오답 — 순수 빨강 대신 채도를 낮춘 코랄. 노랑과 부딪히지 않고
+     배포자료 A3의 따뜻한 톤에서도 튀지 않습니다. */
+  --wrong: #ef7c60;
   --font: "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic",
     "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
 }

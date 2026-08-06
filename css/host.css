@@ -93,23 +93,41 @@ body {
 }
 
 .chip {
+  position: relative;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   background: var(--panel);
   border: 3px solid var(--line);
   color: var(--muted);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
   font-weight: 800;
   font-size: clamp(15px, 1.5vw, 30px);
-  transition: background 0.25s, color 0.25s, border-color 0.25s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
   width: 100%;
 }
 
-/* 칩은 세 단계로 읽힙니다 — 미접속(어두움) → 접속·미제출(연그레이) → 제출(옐로우) */
+/* 오른쪽 위에 걸치는 상태 배지 */
+.chip-badge {
+  position: absolute;
+  top: -3%;
+  right: -3%;
+  width: 34%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.52em;
+  font-weight: 800;
+  line-height: 1;
+  background: var(--panel-2);
+  color: var(--muted);
+  border: 2px solid var(--stage);
+}
+
+/* 문항 진행 중 — 미접속(어두움) → 접속·미제출(연그레이) → 제출(옐로우) */
 .chip.joined {
   background: var(--paper);
   border-color: var(--paper);
@@ -122,26 +140,32 @@ body {
   color: var(--ink);
 }
 
-.chip-mark {
-  font-size: 0.62em;
-  line-height: 1;
-  height: 0.7em;
+.chip.answered .chip-badge {
+  background: var(--ink);
+  color: var(--yellow);
 }
 
-.chip.answered .chip-mark::after {
-  content: "✓";
-}
-
+/* 정답 공개 후 */
 .chip.ox-o {
+  background: var(--cream);
+  border-color: var(--cream);
+  color: var(--ink);
+}
+
+.chip.ox-o .chip-badge {
   background: var(--yellow);
-  border-color: var(--yellow);
   color: var(--ink);
 }
 
 .chip.ox-x {
   background: var(--panel);
-  border-color: var(--line);
-  color: var(--muted);
+  border-color: var(--wrong);
+  color: var(--wrong);
+}
+
+.chip.ox-x .chip-badge {
+  background: var(--wrong);
+  color: var(--stage);
 }
 
 /* ================= 문항 화면 ================= */
@@ -260,14 +284,14 @@ body {
 
 .rchoice {
   background: var(--panel);
-  border-radius: 14px;
-  padding: clamp(10px, 1.2vh, 18px) clamp(14px, 1.4vw, 22px);
+  border-radius: 16px;
+  padding: clamp(14px, 2vh, 30px) clamp(16px, 1.6vw, 26px);
   display: flex;
   align-items: center;
-  gap: 14px;
-  font-size: clamp(15px, 1.3vw, 26px);
+  gap: 16px;
+  font-size: clamp(16px, 1.4vw, 30px);
   font-weight: 700;
-  min-height: 0;
+  min-height: clamp(66px, 11vh, 132px);
 }
 
 .rchoice.is-answer {

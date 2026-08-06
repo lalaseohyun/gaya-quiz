@@ -189,9 +189,9 @@
       '<div class="play">' +
       headHtml(q.scored === false ? "연습문제" : "문제 " + q.no + " / " + quiz.questions.length) +
       '<div><div class="pox ' +
-      (isCorrect ? "o" : "x") +
+      (mine === undefined ? "none" : isCorrect ? "o" : "x") +
       '">' +
-      (isCorrect ? "O" : "X") +
+      (mine === undefined ? "–" : isCorrect ? "O" : "X") +
       '</div><div class="pox-label">' +
       (mine === undefined ? "답을 못 냈어요" : isCorrect ? "정답입니다" : "아쉽습니다") +
       "</div></div>" +

@@ -149,29 +149,31 @@
         var isJoined = joined[t.no] !== undefined && joined[t.no] !== null;
         var ans = a[t.no];
         var cls = "chip";
-        var mark = "";
-        if (mode === "ox" && isJoined) {
-          if (ans === undefined) {
-            cls += " ox-x";
-            mark = "–";
+        var badge = "–";
+        if (mode === "ox") {
+          if (!isJoined || ans === undefined) {
+            badge = "–"; // 미접속·무응답은 어두운 칩 그대로
           } else if (ans.choice === q.answerIndex) {
             cls += " ox-o";
-            mark = "O";
+            badge = "O";
           } else {
             cls += " ox-x";
-            mark = "X";
+            badge = "X";
           }
         } else {
           if (isJoined) cls += " joined";
-          if (ans !== undefined) cls += " answered";
+          if (ans !== undefined) {
+            cls += " answered";
+            badge = "✓";
+          }
         }
         return (
           '<div class="' +
           cls +
           '"><span>' +
           C.escapeHtml(t.label) +
-          '</span><span class="chip-mark">' +
-          mark +
+          '</span><span class="chip-badge">' +
+          badge +
           "</span></div>"
         );
       })
